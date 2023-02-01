@@ -23,14 +23,14 @@ client.on('messageCreate', async function (message) {
      try {
           if (message.author.bot) return;
           console.log(message.content);
-          message.reply(`You said: ${message.content}`);
+          // message.reply(`You said: ${message.content}`);
 
 
           const url = 'https://api.openai.com/v1/completions';
           const objBody = {
                model: "text-davinci-003",
                prompt: `${message.content}`,
-               max_tokens: 100,
+               max_tokens: 800,
                temperature: 0,
           };
           const gptResponse = await fetch(url, {
@@ -45,10 +45,8 @@ client.on('messageCreate', async function (message) {
           const data = await gptResponse.json();
           // console.log("G-Res : ", gptResponse);
           // console.log("Data : ", data);
-          message.reply(`
-               Your Question: ${message.content}\n
-               ${data.choices[0].text}
-          `);
+          message.reply(`${data.choices[0].text}`);
+          console.log(data.choices[0].text);
      } catch (error) {
           console.error(error);
      }
